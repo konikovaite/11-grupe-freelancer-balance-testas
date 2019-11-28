@@ -16,6 +16,7 @@ function renderlentele( list1, list2 ) {
     for ( let i=0; i<list1.length; i++) {
         let parametrai = list1[i];    
         
+        // jei nera tai dedu -
         if( !parametrai.month){
             parametrai.month = '-';
         }
@@ -27,7 +28,9 @@ function renderlentele( list1, list2 ) {
         }
         let kelintasmenesis = parametrai.month-1;
           
+        // skaiciuoju balansa
         let balansas = parametrai.income - parametrai.expense;
+        // jei nera iplauku arba islaidu arba abieju
         if(parametrai.income === '-'){
             balansas = -1 * parametrai.expense;
         }
@@ -38,10 +41,18 @@ function renderlentele( list1, list2 ) {
             balansas = '-';
         }
 
-        // iplaukos += parametrai.income;
-        // islaidos += parametrai.expense;
-        // skirtumas += balansas;  
+        // footerio sumos
+        if(parametrai.income !== '-'){
+            iplaukos += parametrai.income;
+        }
+        if(parametrai.expense !== '-'){
+            islaidos += parametrai.expense;
+        }
+        if(balansas !== '-'){
+            skirtumas += balansas;
+        }
 
+        // surenku lentele
         HTML += `<div class="table-row">
                     <div class="cell">${parametrai.month}</div>
                     <div class="cell">${list2[kelintasmenesis]}</div>
@@ -49,20 +60,18 @@ function renderlentele( list1, list2 ) {
                     <div class="cell">${parametrai.expense} ${parametrai.expense === '-' ? '' : 'Eur'}</div>
                     <div class="cell">${balansas} ${balansas === '-' ? '' : 'Eur'}</div>
                 </div>`;
-    }
-    return document.querySelector('#menesiai').innerHTML = HTML;
-    // HTML = '';
-    // document.querySelector('#menesiai').innerHTML = HTML;
-    //     HTML = `<div class="table-row">
-    //                 <div class="cell"></div>
-    //                 <div class="cell"></div>
-    //                 <div class="cell">${iplaukos} ${iplaukos === '-' ? '' : 'Eur'}</div>
-    //                 <div class="cell">${islaidos} ${islaidos === '-' ? '' : 'Eur'}</div>
-    //                 <div class="cell">${skirtumas} ${skirtumas  === '-' ? '' : 'Eur'}</div>
-    //             </div>`;
+        }
+         document.querySelector('#menesiai').innerHTML = HTML;
 
+    HTML = '';
+        // surenku lenteles footeri
+        HTML = `<div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">${iplaukos} ${iplaukos === '-' ? '' : 'Eur'}</div>
+                <div class="cell">${islaidos} ${islaidos === '-' ? '' : 'Eur'}</div>
+                <div class="cell">${skirtumas} ${skirtumas  === '-' ? '' : 'Eur'}</div>`;
 
-    // document.querySelector('#footer').innerHTML = HTML;
-}
+        document.querySelector('#footer').innerHTML = HTML;
+        }
 
 
